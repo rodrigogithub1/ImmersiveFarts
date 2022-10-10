@@ -19,12 +19,6 @@ from zone import Zone
 FART_ALARM = None
 
 
-# Changelog
-# 1.1
-# - Excluded Servo Sims, Neat Sims, and Good Manners Sims from farting
-# 1.0
-# - Initial Release
-
 class FartAlarm():
     INTERVAL_RATE = 2  # Run every INTERVAL_RATE attempts to decrease number of runs for performance gain
     FART_INTERVAL_PER_SIM = 7500 * INTERVAL_RATE
@@ -41,6 +35,8 @@ class FartAlarm():
         218444,  # trait_Humanoid_Robots_MainTrait
         16858,  # trait_Neat
         160841,  # trait_LifeSkills_GoodManners
+        102336,  # trait_Squeamish
+        256786,  # trait_FastFastidious
     }
 
     BLADDER_MOTIVE_STATISTIC = 16652  # motive_Bladder
@@ -104,7 +100,7 @@ class FartAlarm():
 
     def invoke_fart(self, sim_instance):
         PlayEffect(sim_instance, effect_name='ep1_gas_fart', joint_name=0x556B181A).start()
-        PlaySound(sim_instance, 0x813614B62E50B00B).start()  # mischief_youfarted
+        PlaySound(sim_instance, 0xC10F7DB83D5F709E).start()  # mischief_youfarted
 
         # Only broadcast smell inside buildings
         if sim_instance.is_inside_building:
@@ -133,7 +129,7 @@ class FartAlarm():
 
 
 class FartBroadcasterRequest(BroadcasterRequest):
-    REACTION_BROADCASTER = 13350548967386559723  # ImmersiveFarting_Broadcaster_Reaction_SmellFart
+    REACTION_BROADCASTER = 161748  # broadcaster_Reaction_GrossManners_Fart
 
     def __init__(self, *args, **kwargs):
         self.fart_broadcaster_type = services.get_instance_manager(Types.BROADCASTER).get(self.REACTION_BROADCASTER)
